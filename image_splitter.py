@@ -81,6 +81,7 @@ def split_image_to_tiles(image: Image, save_folder: str, tile_prefix: str) -> in
     print(
         f"Generating {tiles_generated} ({tiles_x}x{tiles_y}) tile(s) for {image.filename} of size {image.size} in {save_folder}"
     )
+    tileIndex = 1
     for y in range(0, tiles_y):
         for x in range(0, tiles_x):
             box = (
@@ -90,8 +91,10 @@ def split_image_to_tiles(image: Image, save_folder: str, tile_prefix: str) -> in
                 min(arguments.max_tile_size * (y + 1), image.height),
             )
             cropped_tile = image.crop(box)
-            image_name = f"{tile_prefix}_tile_{str(y * (tiles_y - 1) + x + 1)}_{str(x)}_{str(y)}.png"  # y and x are swapped because viewing these files in file explorer looks nice
+            image_name = f"{tile_prefix}_tile_{str(tileIndex)}_{str(x)}_{str(y)}.png"  # y and x are swapped because viewing these files in file explorer looks nice
             cropped_tile.save(os.path.join(save_folder, image_name))
+
+            tileIndex += 1
 
             if arguments.verbose == True:
                 print(
