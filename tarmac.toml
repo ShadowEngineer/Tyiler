@@ -1,0 +1,8 @@
+name = "Tyiler"
+# asset-cache-path = "asset_output/cache"
+upload-to-group-id = 6896773
+
+[[inputs]]
+glob = "dolop/colour_tiles/*.png"
+codegen = true
+codegen-path = "dolop/colour_tiles/init.lua"
