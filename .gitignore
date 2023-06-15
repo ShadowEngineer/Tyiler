@@ -4,3 +4,4 @@
 .env
 init.lua
 tarmac-manifest.toml
+*.rbxm

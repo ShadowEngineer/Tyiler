@@ -21,22 +21,22 @@ argument_parser.add_argument(
     "--version",
     action="version",
     dest="version",
-    version="%(prog)s 0.0.1",
-    help="Displays tool version",
+    version="%(prog)s 0.0.2",
+    help="Displays tool version.",
 )
 argument_parser.add_argument(
     "-v",
     "--verbose",
     action="store_true",
     dest="verbose",
-    help="Adds more-informative intermediate program outputs",
+    help="Adds more-informative intermediate program outputs.",
 )
 argument_parser.add_argument(
     "-u",
     "--upload",
     action="store_true",
     dest="upload",
-    help="Uploads the generated tiles to ROBLOX using tarmac",
+    help="Uploads the generated tiles to ROBLOX using tarmac. Ensure you are running in a BASH terminal and you have a .env file with the ROBLOSECURITY key in it.",
 )
 argument_parser.add_argument(
     "-t",
@@ -44,7 +44,7 @@ argument_parser.add_argument(
     action="store",
     dest="max_tile_size",
     default=1024,
-    help="Specifies the maximum tile size per tile (default %(default)s)",
+    help="Specifies the maximum tile size per tile (default %(default)s).",
     nargs="?",
     type=positive_integer,
 )
@@ -103,8 +103,6 @@ def split_image_to_tiles(image: Image, save_folder: str, tile_prefix: str) -> in
 
 
 # script execution
-print("--- SCRIPT START ---\n")
-
 start_time = time.time()
 
 folder_count = 0
@@ -182,11 +180,20 @@ for file_name in os.listdir(os.getcwd()):
 # output
 end_time = time.time()
 print(
-    f"\n --- SCRIPT END ---",
-    f"Images tiled: {colour_image_count + contour_image_count} ({colour_image_count} colour, {contour_image_count} contour)",
+    f"\nImages tiled: {colour_image_count + contour_image_count} ({colour_image_count} colour, {contour_image_count} contour)",
     f"Tiles generated: {tile_count}",
     f"Folders checked: {folder_count} folders",
     f"Running time: {str(end_time - start_time)}s",
     sep="\n",
     end="\n",
 )
+
+# tarmac syncing
+if arguments.upload == True:
+    print(f"Syncing tiles to ROBLOX with tarmac.")
+    os.system("source .env")
+    os.system(
+        "tarmac sync --target roblox --auth $ROBLOSECURITY --retry 5 --retry-delay 5"
+    )
+    os.system("remodel run convert_to_rbxm.lua")
+    print(f"All images synced with ROBLOX.")
