@@ -2,6 +2,6 @@
 *
 !*.*
 .env
-init.lua
+*.lua
 tarmac-manifest.toml
 *.rbxm

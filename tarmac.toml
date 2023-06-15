@@ -1,8 +1,10 @@
 name = "Tyiler"
+
+# starsim group
 upload-to-group-id = 6896773
 
 [[inputs]]
 # TODO: Change this to "**/*tile*.png" to sync all images. Keeping this as this to just test on dolop since syncing takes and I already have 353 tiles.
-glob = "dolop/**/*tile*.png"
+glob = "**/*tile*.png"
 codegen = true
-codegen-path = "init.lua"
+codegen-path = "MapTiles.lua"

@@ -3,6 +3,7 @@ import os
 import shutil
 import math
 import time
+import json
 from PIL import Image
 
 
@@ -123,7 +124,7 @@ def split_image_to_tiles(image: Image, save_folder: str, tile_prefix: str) -> in
             background_tile = Image.new(
                 "RGBA",
                 (arguments.max_tile_size, arguments.max_tile_size),
-                (0, 0, 0, 255),
+                (0, 0, 0, 0),
             )
             if y == tiles_y - 1 or x == tiles_x - 1:
                 image_tile = background_tile.paste(image_tile)
@@ -145,6 +146,7 @@ def split_image_to_tiles(image: Image, save_folder: str, tile_prefix: str) -> in
 
 # script execution
 if arguments.generate_tiles == True:
+    resolutions = {}
     start_time = time.time()
 
     folder_count = 0
@@ -200,6 +202,12 @@ if arguments.generate_tiles == True:
                         f'Found adequate colour image in {file_name}, "{colour_image.filename}" of size {colour_image.width}x{colour_image.height}'
                     )
 
+                resolutions[file_name] = {
+                    "colour": {
+                        "X": colour_image.width,
+                        "Y": colour_image.height,
+                    },
+                }
                 tile_count += split_image_to_tiles(
                     colour_image, target_save_folder_colour, f"{file_name}_colour"
                 )
@@ -216,6 +224,10 @@ if arguments.generate_tiles == True:
                         f'Found adequate contour image in {file_name}, "{contour_image.filename}" of size {contour_image.width}x{contour_image.height}'
                     )
 
+                resolutions[file_name]["contour"] = {
+                    "X": contour_image.width,
+                    "Y": contour_image.height,
+                }
                 tile_count += split_image_to_tiles(
                     contour_image, target_save_folder_contour, f"{file_name}_contour"
                 )
@@ -233,6 +245,10 @@ if arguments.generate_tiles == True:
         sep="\n",
         end="\n",
     )
+    print(resolutions)
+    resolutions_file = open("Resolutions.json", "w")
+    resolutions_file.write(json.dumps(resolutions))
+    resolutions_file.close()
 
 # tarmac syncing
 if arguments.upload == True:
@@ -242,7 +258,7 @@ if arguments.upload == True:
         auth = parse_env_file(env_path, "ROBLOSECURITY")
         if auth != None:
             os.system(
-                f'tarmac sync --target roblox --auth "{auth}" --retry 5 --retry-delay 5'
+                f'tarmac sync --target roblox --auth "{auth}" --retry 5 --retry-delay 10'
             )
             os.system("remodel run convert_to_rbxm.lua")
             print(f"All images synced with ROBLOX.")
