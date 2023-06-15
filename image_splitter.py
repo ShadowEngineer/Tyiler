@@ -157,7 +157,7 @@ for file_name in os.listdir(os.getcwd()):
                 )
 
             tile_count += split_image_to_tiles(
-                colour_image, target_save_folder_colour, file_name
+                colour_image, target_save_folder_colour, f"{file_name}_colour"
             )
         else:
             if arguments.verbose == True:
@@ -173,7 +173,7 @@ for file_name in os.listdir(os.getcwd()):
                 )
 
             tile_count += split_image_to_tiles(
-                contour_image, target_save_folder_contour, file_name
+                contour_image, target_save_folder_contour, f"{file_name}_contour"
             )
         else:
             if arguments.verbose == True:

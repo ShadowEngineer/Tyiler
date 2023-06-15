@@ -1,3 +1,6 @@
 # ignore every root-level directory, except any root-level files
 *
 !*.*
+.env
+init.lua
+tarmac-manifest.toml

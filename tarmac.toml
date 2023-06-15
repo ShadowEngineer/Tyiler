@@ -1,8 +1,8 @@
 name = "Tyiler"
-# asset-cache-path = "asset_output/cache"
 upload-to-group-id = 6896773
 
 [[inputs]]
-glob = "dolop/colour_tiles/*.png"
+# TODO: Change this to "**/*tile*.png" to sync all images. Keeping this as this to just test on dolop since syncing takes and I already have 353 tiles.
+glob = "dolop/**/*tile*.png"
 codegen = true
-codegen-path = "dolop/colour_tiles/init.lua"
+codegen-path = "init.lua"
