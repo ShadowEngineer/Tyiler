@@ -3,5 +3,5 @@
 
 # To add a new tool, add an entry to this table.
 [tools]
-tarmac = "Roblox/tarmac@0.7.0"
+tarmac = "rojo-rbx/tarmac@0.7.3"
 remodel = "rojo-rbx/remodel@0.11.0"

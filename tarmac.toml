@@ -1,10 +1,12 @@
 name = "Tyiler"
 
-# starsim group
-upload-to-group-id = 6896773
+# since the upload limit can be bypassed by just uploading to different groups that are all related,
+# once you hit the monthly limit, just change group IDs and keep uploading!
+# StarSim: 6896773
+# GAR: 6897077
+upload-to-group-id = 6897077
 
 [[inputs]]
-# TODO: Change this to "**/*tile*.png" to sync all images. Keeping this as this to just test on dolop since syncing takes and I already have 353 tiles.
 glob = "**/*tile*.png"
 codegen = true
 codegen-path = "MapTiles.lua"
